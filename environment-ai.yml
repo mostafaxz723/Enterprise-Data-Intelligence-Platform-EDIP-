@@ -1,0 +1,24 @@
+# Separate env for the chatbot / RAG: torch is heavy and its pins often clash with the main env.
+name: egypt-ai
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - pip
+  - pandas
+  - numpy
+  - pyyaml
+  - python-dotenv
+  - jupyterlab
+  - ipykernel
+  - psycopg2
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cpu
+      - torch
+      - sentence-transformers
+      - pgvector          # python client for the pgvector database extension
+      - openai            # universal client: Ollama, Groq, Gemini, OpenRouter... all speak this API
+      - anthropic         # optional (paid)
+      - pypdf
+      - pdfplumber
+      - rank-bm25
+      - tiktoken

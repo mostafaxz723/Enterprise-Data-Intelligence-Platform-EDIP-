@@ -1,0 +1,115 @@
+# Single source of truth for ALL Python libraries of the project.
+# Rule: any library you install -> add its name here in the same minute.
+name: egypt-energy
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - pip
+  # --- geo
+  - gdal
+  - geopandas
+  - pyogrio
+  - fiona
+  - shapely
+  - pyproj
+  - rasterio
+  - rioxarray
+  - rasterstats
+  - regionmask
+  - h3-py
+  - osmnx
+  - geopy
+  - contextily
+  - mapclassify
+  - cartopy
+  - leafmap
+  - folium
+  - geemap
+  - pystac-client
+  # --- climate / arrays
+  - xarray
+  - netcdf4
+  - h5netcdf
+  - cfgrib
+  - eccodes
+  - dask
+  - zarr
+  # --- energy
+  - pvlib-python
+  # --- data
+  - pandas
+  - numpy
+  - scipy
+  - polars
+  - duckdb
+  - pyarrow
+  - sqlalchemy
+  - psycopg2
+  - geoalchemy2
+  - alembic
+  - pandera
+  - pyyaml
+  - requests
+  - boto3
+  - s3fs
+  - jinja2
+  - networkx
+  - rtree
+  - openpyxl
+  - reportlab
+  - pydantic-settings
+  - numexpr
+  - bottleneck
+  - tabulate
+  - nbformat
+  - requests-cache
+  - httpx
+  - tenacity
+  - python-dotenv
+  - loguru
+  - rich
+  - typer
+  - tqdm
+  # --- ml / stats
+  - scikit-learn
+  - statsmodels
+  - xgboost
+  - lightgbm
+  - shap
+  - optuna
+  - mlflow
+  # --- viz
+  - matplotlib
+  - seaborn
+  - plotly
+  - altair
+  - pydeck
+  - streamlit
+  # --- api
+  - fastapi
+  - uvicorn
+  - pydantic
+  - python-multipart
+  - orjson
+  - redis-py
+  # --- dev
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - pytest
+  - pytest-cov
+  - ruff
+  - black
+  - pre-commit
+  - pip:
+      - windpowerlib
+      - openmeteo-requests
+      - retry-requests
+      - cdsapi
+      - earthengine-api
+      - planetary-computer
+      - odc-stac
+      - pmtiles
+      - arabic-reshaper
+      - python-bidi
+      - mkdocs-material

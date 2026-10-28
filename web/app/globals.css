@@ -1,0 +1,5 @@
+/* Base styles only. Design is up to the team. */
+html, body { margin: 0; font-family: "Segoe UI", Tahoma, "Noto Sans Arabic", system-ui, sans-serif; line-height: 1.7; }
+a { color: #0b6e7f; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 18px; }
+.todo { border: 2px dashed #bbb; border-radius: 12px; padding: 16px 20px; color: #555; }

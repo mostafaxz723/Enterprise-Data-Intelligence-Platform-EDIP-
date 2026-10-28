@@ -1,0 +1,7 @@
+name: egypt_energy
+version: "0.1.0"
+profile: egypt_energy
+model-paths: ["models"]
+models:
+  egypt_energy:
+    staging: { +schema: staging, +materialized: view }

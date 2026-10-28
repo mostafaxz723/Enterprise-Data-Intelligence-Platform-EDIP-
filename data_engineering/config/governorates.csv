@@ -1,0 +1,28 @@
+id,name_ar,name_en,lat,lon
+cairo,القاهرة,Cairo,30.04,31.24
+giza,الجيزة,Giza,30.01,31.21
+alexandria,الإسكندرية,Alexandria,31.20,29.92
+port_said,بورسعيد,Port Said,31.27,32.30
+suez,السويس,Suez,29.97,32.55
+ismailia,الإسماعيلية,Ismailia,30.59,32.27
+damietta,دمياط,Damietta,31.42,31.82
+dakahlia,الدقهلية,Dakahlia (Mansoura),31.04,31.38
+sharqia,الشرقية,Sharqia (Zagazig),30.59,31.50
+qalyubia,القليوبية,Qalyubia (Banha),30.47,31.18
+kafr_el_sheikh,كفر الشيخ,Kafr El Sheikh,31.11,30.94
+gharbia,الغربية,Gharbia (Tanta),30.79,31.00
+monufia,المنوفية,Monufia (Shibin El Kom),30.55,31.01
+beheira,البحيرة,Beheira (Damanhur),31.03,30.47
+fayoum,الفيوم,Fayoum,29.31,30.84
+beni_suef,بني سويف,Beni Suef,29.07,31.10
+minya,المنيا,Minya,28.11,30.75
+asyut,أسيوط,Asyut,27.18,31.18
+sohag,سوهاج,Sohag,26.56,31.70
+qena,قنا,Qena,26.16,32.72
+luxor,الأقصر,Luxor,25.70,32.64
+aswan,أسوان,Aswan,24.09,32.90
+red_sea,البحر الأحمر,Red Sea (Hurghada),27.26,33.81
+new_valley,الوادي الجديد,New Valley (Kharga),25.45,30.55
+matrouh,مطروح,Matrouh,31.35,27.24
+north_sinai,شمال سيناء,North Sinai (Arish),31.13,33.80
+south_sinai,جنوب سيناء,South Sinai (El Tor),28.24,33.62

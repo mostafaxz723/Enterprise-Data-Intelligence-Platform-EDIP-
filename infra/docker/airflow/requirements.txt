@@ -1,0 +1,9 @@
+# Keep the Airflow image LIGHT (it is pinned by Airflow's constraints file).
+# Heavy work (xarray / rasters / ERA5) runs from the conda env until we need a worker image.
+httpx
+tenacity
+retry-requests
+openmeteo-requests
+h3
+pyyaml
+shapely

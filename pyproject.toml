@@ -1,0 +1,7 @@
+[tool.ruff]
+line-length = 120
+[tool.ruff.lint]
+select = ["E", "F", "I"]     # basic errors, unused code, import order. Keep it simple for the team.
+ignore = ["E501"]            # long lines are fine (Arabic text, URLs)
+[tool.pytest.ini_options]
+testpaths = ["tests"]
