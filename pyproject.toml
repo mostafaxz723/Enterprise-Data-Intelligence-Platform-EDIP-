@@ -5,3 +5,4 @@ select = ["E", "F", "I"]     # basic errors, unused code, import order. Keep it 
 ignore = ["E501"]            # long lines are fine (Arabic text, URLs)
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]

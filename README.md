@@ -1,144 +1,261 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" alt="Egypt Live Renewable Energy Atlas" width="100%">
+<img src="docs/assets/hero.jpg" alt="Egypt Live Renewable Energy Atlas — a data-driven platform for renewable energy site selection in Egypt" width="100%">
 
-### An open, data-driven platform that tells you **where to build solar & wind in Egypt**, **how much it will produce**, and **what can go wrong** — in plain language.
+<sub><i>Concept illustration. The interface and values shown are a design vision of the planned platform.</i></sub>
+
+<h3>Where should we build? How much energy can we realistically generate? What risks should we consider?</h3>
+
+A data engineering platform that turns open weather and geospatial data into transparent, explainable renewable energy site assessments for Egypt.
 
 <br>
 
-![Status](https://img.shields.io/badge/status-foundation%20ready-1fb5c9?style=for-the-badge)
-![DEPI](https://img.shields.io/badge/DEPI-Microsoft%20Data%20Engineer-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
-![Cost](https://img.shields.io/badge/budget-%240%20%7C%20100%25%20free%20stack-4cc38a?style=for-the-badge)
+[![Overview](https://img.shields.io/badge/Overview-1fb5c9?style=for-the-badge)](#overview)
+[![Features](https://img.shields.io/badge/Features-e8a317?style=for-the-badge)](#planned-key-features)
+[![Architecture](https://img.shields.io/badge/Architecture-3F82C4?style=for-the-badge)](#data-engineering-architecture)
+[![Quick Start](https://img.shields.io/badge/Quick%20Start-4cc38a?style=for-the-badge)](#getting-started)
+[![Roadmap](https://img.shields.io/badge/Roadmap-9b6bd6?style=for-the-badge)](#roadmap)
+[![Team](https://img.shields.io/badge/Team-e5604d?style=for-the-badge)](#team-data-titans)
 
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
-![Airflow](https://img.shields.io/badge/Apache%20Airflow-2.8-017CEE?logo=apacheairflow&logoColor=white)
-![PostGIS](https://img.shields.io/badge/PostgreSQL-PostGIS-336791?logo=postgresql&logoColor=white)
-![dbt](https://img.shields.io/badge/dbt-transformations-FF694B?logo=dbt&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
-![Three.js](https://img.shields.io/badge/three.js-3D-000000?logo=threedotjs&logoColor=white)
+![Status](https://img.shields.io/badge/status-foundation%20ready%20%C2%B7%20implementation%20in%20progress-1fb5c9?style=flat-square)
+![Track](https://img.shields.io/badge/DEPI-AI%20%26%20Data%20Science%20%C2%B7%20Microsoft%20Data%20Engineer-0078D4?style=flat-square&logo=microsoft&logoColor=white)
+![Budget](https://img.shields.io/badge/budget-%240%20%C2%B7%20free%20%26%20open--source-4cc38a?style=flat-square)
 
-[Overview](#overview) · [Architecture](#architecture) · [Screens](#product-screens) · [Quick Start](#quick-start) · [DEPI Mapping](#how-this-project-maps-to-the-depi-curriculum) · [Roadmap](#roadmap) · [Team](#team-data-titans)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)
+![Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat-square&logo=apacheairflow&logoColor=white)
+![PostGIS](https://img.shields.io/badge/PostGIS-336791?style=flat-square&logo=postgresql&logoColor=white)
+![dbt](https://img.shields.io/badge/dbt-FF694B?style=flat-square&logo=dbt&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+
+**A team project by Data Titans** · Digital Egypt Pioneers Initiative (DEPI) · AI & Data Science — Microsoft Data Engineer Track
 
 </div>
 
 ---
 
+## Project status at a glance
+
+| Area | Status | What exists today |
+|---|---|---|
+| **Engineering foundation** | ✅ Ready | Repository layout, reproducible environments, one-command setup, containerised infrastructure, CI |
+| **Website skeleton** | ✅ Ready | Next.js project with all eight screen routes in place |
+| **Data pipelines** | 🚧 In progress | Airflow and PostGIS are provisioned; source extractors are being built |
+| **Energy models & ranking** | 🔜 Planned | pvlib / windpowerlib workflows and scoring |
+| **Interactive atlas & assistant** | 🔜 Planned | Map, 3D simulator, explanations, free chatbot |
+
+> Features described below are **planned capabilities** unless marked otherwise. Nothing is claimed as implemented or validated before it is.
+
+<details open>
+<summary><b>Table of contents</b></summary>
+
+- [Overview](#overview) · [The problem](#the-problem) · [Our approach](#our-approach)
+- [Planned key features](#planned-key-features) · [Product screens](#product-screens)
+- [Data engineering architecture](#data-engineering-architecture) · [Technology stack](#technology-stack)
+- [Data sources](#data-sources) · [Modeling and validation](#modeling-and-validation)
+- [Repository structure](#repository-structure) · [Getting started](#getting-started)
+- [Roadmap](#roadmap) · [Team](#team-data-titans) · [Scope and limitations](#scope-and-limitations)
+
+</details>
+
 ## Overview
 
-Egypt has some of the world's best solar radiation and strong wind corridors in the Gulf of Suez and the Red Sea. Choosing *where* to build is still slow and expensive, and global atlases only answer part of the question: they show the **resource**, but not the dust, the grid distance, the flash-flood risk or the final cost.
+Egypt has substantial solar and wind potential, yet choosing a location takes more than finding high irradiation or strong wind. Dust accumulation, heat, terrain, flood exposure, land-use restrictions, grid accessibility and the hourly complementarity of solar and wind all shape a project's feasibility and performance.
 
-**Egypt Live Renewable Energy Atlas** closes that gap. It combines live weather and global GIS layers in one hexagonal grid, runs transparent physical models on top, and turns the result into a decision a non-technical person can read.
+**Egypt Live Renewable Energy Atlas** is a geospatial data engineering platform that integrates environmental, meteorological, energy and infrastructure datasets into one consistent analytical foundation, so candidate sites can be compared, their generation estimated, and the reasons behind each recommendation explained.
 
-| Question | What the platform gives you |
+Its central idea is simple: **move beyond a resource map toward a transparent decision-support tool.**
+
+| Question | Planned answer |
 |---|---|
-| **Where should we build?** | A ranked map of candidate sites by estimated cost per kWh, resource, grid distance and risk, with weights the user controls |
-| **How much will it produce?** | Production estimates as a **P50 / P90 range**, including losses from heat and dust, plus a 72-hour live forecast |
-| **What can go wrong?** | Flash-flood, dust, grid, protected-area and bird-migration constraints, each explained in Arabic and English |
+| **Where should we build?** | Identify and rank candidate locations using renewable resources, geospatial conditions, infrastructure accessibility and relevant constraints. |
+| **How much energy could we generate?** | Estimate generation from weather inputs and physics-based models, accounting for system losses and uncertainty (P50 / P90 ranges). |
+| **What could affect feasibility?** | Assess dust losses, terrain and flood exposure, land-use constraints, grid accessibility and data limitations. |
 
-> **Project status:** the engineering foundation is complete (reproducible environments, containerised infrastructure, repository layout, website skeleton). Data pipelines, models and screens are being implemented. See the [Roadmap](#roadmap).
+## The problem
 
-## What makes it different
+Site assessment needs data from many sources, formats, resolutions and time periods, and resource-only assessments can overlook practical constraints.
 
-1. **Dust inside the production model**, not an afterthought, with a cleaning-schedule recommendation per site.
-2. **Hourly solar + wind complementarity** to reduce storage needs.
-3. **Grid cost inside the decision**: ranking by estimated LCOE, not by radiation alone.
-4. **Risk filters**: flash-flood channels from terrain analysis, protected areas, land cover and bird-migration corridors.
-5. **A live operational view**: 72-hour production forecast, not a one-off feasibility study.
-6. **Honest uncertainty**: every number comes with a range, its formula and its source.
-7. **User-controlled weights**: an investor and a ministry can rank the same sites differently.
-8. **An assistant that explains** every result, grounded in the platform's own data and documentation.
+- **Resource data alone is not enough.** High irradiation or wind speed does not make a site the best overall choice.
+- **Dust and heat matter.** They can reduce photovoltaic output compared with idealised estimates.
+- **Infrastructure affects feasibility.** A promising site may be far from mapped grid infrastructure, and proximity alone does not guarantee connection capacity.
+- **Terrain and environment matter.** Protected areas, land cover, slope and potential flood pathways must be considered.
+- **Solar and wind vary over time.** Hourly complementarity can explain variability and inform storage scenarios.
+- **Results must be explainable.** Users should be able to inspect the data, assumptions and factors behind every score.
+
+## Our approach
+
+| | Capability | What it does |
+|---|---|---|
+| 1 | **Data engineering** | Ingest, validate, standardise, store and update datasets from multiple sources |
+| 2 | **Geospatial analytics** | Align data on a shared spatial framework (H3) and screen candidate sites |
+| 3 | **Energy modeling** | Estimate solar and wind generation with documented physical models |
+| 4 | **Decision support** | Compare and rank sites with configurable criteria, explanations and uncertainty |
+
+The goal is **not** to replace detailed engineering studies or established resource atlases, but to connect resource estimates with local environmental, infrastructure and operational considerations.
+
+## Planned key features
+
+| Feature | Description |
+|---|---|
+| **Multi-criteria site selection** | Rank sites by resource potential, terrain, land cover, environmental constraints and infrastructure, with a documented method |
+| **Dust-aware solar estimates** | A configurable soiling model driven by dust and precipitation, with approximate cleaning schedules |
+| **Combined solar and wind analysis** | Hourly complementarity and scenario-based storage exploration |
+| **Grid and economic screening** | Proximity to mapped grid features and approximate connection-cost scenarios; LCOE when defensible inputs exist |
+| **Risk screening** | Slope, drainage and flood pathways, protected areas, land cover, settlements, and bird-sensitive areas where reliable data exist |
+| **Short-term forecasting** | Up to 72-hour solar and wind generation estimates, clearly separated from measured plant output |
+| **Explainable, configurable ranking** | Users adjust the weight of yield, cost, grid access and constraints and see why a site scores as it does |
+| **Interactive map and reports** | Candidate profiles, side-by-side comparison, forecast view and downloadable reports |
+
+<details open>
+<summary><b>Important caveats for these features</b></summary>
+
+- Dust concentration is not a direct measurement of dust deposited on panels; soiling estimates need calibration and are presented as approximations.
+- Mapped infrastructure does not prove a connection point exists, has spare capacity, or is available at a given cost.
+- Risk layers are for **preliminary screening**, not a substitute for official permitting or environmental impact assessment.
+- Facility case studies (for example Benban, Zafarana, Gabal El Zeit) are estimates and must not be confused with measured plant output.
+</details>
 
 ## Product screens
 
-The website is a Next.js application (static export, so it can be hosted for free). The route structure is in place and each screen is being built.
+The website is a Next.js application (static export, hostable for free). All routes exist; each screen is being built.
 
 | Screen | Purpose |
 |---|---|
-| **Home** | The three questions, key differentiators, entry points |
+| **Home** | The three questions, differentiators and entry points |
 | **Map** | 3D hexagonal map of Egypt, technology selector, adjustable weights, top sites |
 | **Site details** | Production range, cost, risks and a "why this ranking?" explanation |
 | **Compare** | Side-by-side comparison of 2–4 sites, printable |
-| **Live forecast** | 72-hour solar and wind output, dust and high-wind alerts |
-| **3D simulator** | Interactive plant: move the sun, wind and dust, and watch output change |
-| **Assistant** | Free chatbot that answers questions about the system and cites sources |
+| **Live forecast** | 72-hour solar and wind output with dust and high-wind alerts |
+| **3D simulator** | Interactive plant: change sun, wind and dust and watch output respond |
+| **Assistant** | Free chatbot that answers questions about the system and cites its sources |
 | **Methodology** | Formulas, data sources and the limits of the platform |
 
-## Architecture
+## Data engineering architecture
+
+Data engineering is the foundation of the project: a **repeatable, quality-controlled data platform**, not a one-time collection of datasets.
 
 ```mermaid
-flowchart LR
-  subgraph SRC["Open data sources"]
-    S1["Open-Meteo<br/>forecast + dust"]
-    S2["ERA5 / CAMS<br/>Copernicus"]
-    S3["Global Solar and Wind Atlas"]
-    S4["OpenStreetMap<br/>grid and roads"]
-    S5["DEM / WorldCover / WDPA"]
-  end
-  subgraph ORCH["Orchestration"]
-    A["Apache Airflow<br/>ingest, validate, backfill"]
-  end
-  subgraph LAKE["Storage layers"]
-    B1[("Bronze<br/>raw")]
-    B2[("Silver<br/>cleaned")]
-    B3[("Gold<br/>analytics")]
-  end
-  G["PostGIS + H3 grid"]
-  E["Energy engine<br/>pvlib, windpowerlib, LCOE"]
-  API["FastAPI"]
-  WEB["Next.js web app<br/>map, 3D simulator"]
-  BOT["Assistant<br/>RAG + free LLM"]
-  S1 & S2 & S3 & S4 & S5 --> A --> B1 --> B2 --> B3 --> G
-  G --> E --> API
-  API --> WEB
-  API --> BOT
+flowchart TD
+    A["External Data Sources"] --> B["Ingestion and Scheduling"]
+    B --> C["Raw Data Layer"]
+    C --> D["Validation and Standardization"]
+    D --> E["Spatial and Temporal Integration"]
+    E --> F["Curated Analytical Data"]
+    F --> G["Energy Models and Forecasting"]
+    F --> H["Geospatial Risk Assessment"]
+    G --> I["Site Ranking and Explanations"]
+    H --> I
+    I --> J["API and Interactive Atlas"]
+    D -.-> K["Data Quality Checks"]
+    E -.-> L["Lineage and Metadata"]
 ```
 
-**Design principles:** idempotent and re-runnable pipelines, raw data never modified, data-quality checks between layers (Pandera, dbt tests), one shared spatial key (H3 cell id) for all sources, and a static-first deployment that costs nothing to host.
+| Layer | Responsibility | Technologies |
+|---|---|---|
+| **Ingestion** | Retrieve weather, dust, historical and geospatial data | Python, HTTP APIs, Open-Meteo, Copernicus services |
+| **Orchestration** | Schedule jobs, dependencies, retries and backfills | Apache Airflow |
+| **Raw storage** | Preserve source data and enable efficient processing | Parquet, Zarr |
+| **Data quality** | Check schemas, missing values, duplicates, ranges, consistency | Pandera, dbt tests |
+| **Spatial integration** | Standardise spatial references and link data to grid cells | GeoPandas, Rasterio, H3 |
+| **Analytical storage** | Store spatial layers and query-ready data | PostgreSQL, PostGIS |
+| **Transformation** | Reusable analytical models and SQL transformations | SQL, dbt, DuckDB |
+| **Energy modeling** | Estimate solar and wind generation | pvlib, windpowerlib |
+| **API** | Serve site assessments and results | FastAPI |
+| **Web application** | Maps, comparisons and results | Next.js, MapLibre GL JS, deck.gl, three.js |
 
-## Tech stack (100% free and open source)
+<details open>
+<summary><b>Spatial and temporal integration principles</b></summary>
 
-| Layer | Tools |
+- **H3 spatial indexing** gives one shared key for candidate-site analysis.
+- **Time alignment** standardises timestamps and time zones and reconciles hourly forecasts with historical or reanalysis data.
+- **Data contracts** define expected fields, types, ranges, uniqueness rules and missing-data expectations.
+- **Backfills and reproducibility** allow historical reprocessing when sources or logic change.
+- **Lineage and provenance** record source identifiers, retrieval times and transformation versions.
+- **Efficient processing** uses partitioned data, Dask and Zarr to control memory use.
+
+Converting data to H3 does not create spatial detail that the original data did not have.
+</details>
+
+## Technology stack
+
+100% free and open source.
+
+| Area | Tools |
 |---|---|
-| **Orchestration** | Apache Airflow |
-| **Storage** | PostgreSQL + PostGIS, pgvector, Parquet / Zarr files |
-| **Transformation & quality** | dbt, DuckDB, Polars, Pandera |
-| **Geo & climate processing** | GeoPandas, rasterio, xarray, Dask, H3, OSMnx |
-| **Energy modelling** | pvlib, windpowerlib, scikit-learn, LightGBM |
+| **Languages & processing** | Python, SQL, pandas, NumPy, xarray, Polars, DuckDB, Dask |
+| **Geospatial** | GeoPandas, Rasterio, H3, OSMnx |
+| **Data engineering & storage** | Apache Airflow, PostgreSQL + PostGIS, pgvector, Parquet / Zarr, dbt, Pandera |
+| **Energy modeling & ML** | pvlib, windpowerlib, scikit-learn, LightGBM |
 | **Backend** | FastAPI, Pydantic |
-| **Frontend** | Next.js, React, TypeScript, MapLibre GL, deck.gl, three.js / react-three-fiber |
+| **Frontend** | Next.js, React, TypeScript, MapLibre GL JS, deck.gl, three.js / react-three-fiber |
 | **AI assistant** | Retrieval-augmented generation, sentence-transformers, free local or free-tier LLMs (Ollama) |
-| **DevOps** | Docker Compose (profiles), GitHub Actions, pre-commit, Ruff, pytest |
-| **Optional services** | Redis, Kafka, Prometheus, Grafana, Metabase, MLflow, Martin tiles, MongoDB, ClickHouse |
+| **DevOps & quality** | Docker Compose (on-demand profiles), GitHub Actions, pre-commit, Ruff, pytest |
+
+## Data sources
+
+<details open>
+<summary><b>Candidate sources</b> (exact datasets, coverage, licences and update schedules must be verified before use)</summary>
+
+| Source | Intended use |
+|---|---|
+| [Open-Meteo](https://open-meteo.com) | Weather forecasts and supported atmospheric variables |
+| [Copernicus ERA5 / ERA5-Land](https://cds.climate.copernicus.eu) | Historical meteorological and land-surface analysis |
+| [Copernicus CAMS](https://ads.atmosphere.copernicus.eu) | Atmospheric composition and suitable dust-related variables |
+| [NASA POWER](https://power.larc.nasa.gov) | Solar and meteorological reference data |
+| [Copernicus DEM](https://dataspace.copernicus.eu) | Elevation and terrain analysis |
+| [ESA WorldCover](https://esa-worldcover.org) | Land-cover classification |
+| [OpenStreetMap](https://www.openstreetmap.org) | Roads, settlements and mapped infrastructure |
+| [Protected Planet (WDPA)](https://www.protectedplanet.net) | Protected-area screening |
+| [WorldPop](https://www.worldpop.org) | Population distribution |
+| [PVGIS](https://re.jrc.ec.europa.eu/pvg_tools) | Independent solar generation comparison |
+| [Global Solar Atlas](https://globalsolaratlas.info) · [Global Wind Atlas](https://globalwindatlas.info) | Solar and wind resource references |
+| [H3](https://h3geo.org) | Hexagonal spatial indexing |
+| [WRI power-plant datasets](https://datasets.wri.org) | Power-plant reference data, subject to availability |
+
+**Availability note:** electrical network data, plant-level generation observations, flood-related inputs and bird-sensitivity layers need additional source-specific verification. Public availability does not guarantee completeness or suitability. Attribution and licence terms will be documented for every dataset used.
+</details>
+
+## Modeling and validation
+
+- **Solar (pvlib):** solar position, plane-of-array irradiance, module temperature, system losses and dust-related soiling assumptions.
+- **Wind (windpowerlib):** wind-speed adjustment to hub height, turbine power curves, air density and system assumptions.
+- **Validation:** outputs are compared with independent references such as PVGIS and the Global Solar / Wind Atlas where technically meaningful.
+- **Transparency:** we separate model estimates, independent reference estimates, measured observations, and assumptions with uncertainty ranges.
+
+> No accuracy percentage or performance claim is published without a documented evaluation method and suitable validation data.
+
+The full formulas and design are in [`docs/SPEC.md`](docs/SPEC.md).
 
 ## Repository structure
 
 ```text
 .
 ├── web/                 Next.js website (screens, map, 3D simulator)
-├── data_engineering/    The core track: pipelines and warehouse
+├── data_engineering/    Core track: pipelines and warehouse
 │   ├── dags/            Airflow DAGs
 │   ├── ingestion/       Source extractors (Open-Meteo, ERA5, OSM, ...)
 │   ├── warehouse/       dbt project: staging -> analytics
 │   ├── config/          Configuration (governorates, ...)
+│   ├── notebooks/       Exploration and experiments
 │   └── lake/            Local data (git-ignored)
 ├── engine/              Pure energy and economics code (PV, wind, LCOE, ranking)
 ├── api/                 FastAPI backend
 ├── assistant/           RAG assistant
 ├── infra/               Docker build contexts
-├── setup/               One-command machine setup + verification
+├── setup/               One-command machine setup and verification
 ├── docs/                Specification, setup, performance, deployment
 ├── tests/               Automated tests
 ├── docker-compose.yml   All services, started on demand with profiles
 └── environment.yml      Single source of truth for Python libraries
 ```
 
-Each folder has its own `README.md` explaining what belongs there.
+Every folder has its own `README.md` explaining what belongs there.
 
-## Quick start
+## Getting started
 
-**Requirements:** Git, VS Code, Node.js (LTS). For the data track also Anaconda and Docker Desktop. Full list: [`setup/PROGRAMS.md`](setup/PROGRAMS.md).
+**Requirements:** Git, VS Code and Node.js (LTS). For the data track also Anaconda and Docker Desktop. Full list: [`setup/PROGRAMS.md`](setup/PROGRAMS.md).
 
 ```powershell
 git clone https://github.com/mostafaxz723/Enterprise-Data-Intelligence-Platform-EDIP-.git egypt-energy-atlas
@@ -150,19 +267,17 @@ powershell -ExecutionPolicy Bypass -File setup\bootstrap.ps1 -Role data    # dat
 powershell -ExecutionPolicy Bypass -File setup\bootstrap.ps1               # everything
 ```
 
-Linux / macOS: `bash setup/bootstrap.sh --role all`. Step-by-step guide with troubleshooting: [`START-HERE.md`](START-HERE.md).
-
-**Run it:**
+Linux / macOS: `bash setup/bootstrap.sh --role all`. A step-by-step guide with troubleshooting is in [`START-HERE.md`](START-HERE.md).
 
 ```powershell
 docker compose up -d                      # PostGIS only (lightweight)
-docker compose --profile airflow up -d    # + Airflow      -> http://localhost:8080
-docker compose --profile app up -d        # + API          -> http://localhost:8000/docs
-cd web && npm run dev                     # website        -> http://localhost:3000
+docker compose --profile airflow up -d    # + Airflow  -> http://localhost:8080
+docker compose --profile app up -d        # + API      -> http://localhost:8000/docs
+cd web; npm run dev                       # website    -> http://localhost:3000
 .\setup\stack.ps1 stop                    # stop everything (data is kept)
 ```
 
-<details>
+<details open>
 <summary><b>Docker services and ports</b> (nothing starts unless you ask for it)</summary>
 
 | Profile | Services | Port | Approx. RAM |
@@ -177,92 +292,119 @@ cd web && npm run dev                     # website        -> http://localhost:3
 | `streaming` · `nosql` · `olap` | Kafka · MongoDB · ClickHouse | 9092 · 27018 · 8123 | 0.5–1 GB |
 | `dbt` | on demand: `docker compose run --rm dbt run` | — | temporary |
 
-Every service has a memory cap. Do not run more than 2–3 profiles at once on a 16 GB laptop. Tips: [`docs/PERFORMANCE.md`](docs/PERFORMANCE.md).
+Every service has a memory cap. On a 16 GB laptop, do not run more than 2–3 profiles at once. Tips: [`docs/PERFORMANCE.md`](docs/PERFORMANCE.md).
 </details>
 
-## Data sources
-
-All open or free for non-commercial use. Licences and limits must be checked per source before production use.
-
-| Source | Used for |
-|---|---|
-| [Open-Meteo](https://open-meteo.com) | Hourly forecasts, dust, air quality |
-| [ERA5 / CAMS (Copernicus)](https://cds.climate.copernicus.eu) | Historical weather, dust forecasts |
-| [Global Solar Atlas](https://globalsolaratlas.info) · [Global Wind Atlas](https://globalwindatlas.info) · [PVGIS](https://re.jrc.ec.europa.eu/pvg_tools) | Resource reference and validation |
-| [Copernicus DEM](https://dataspace.copernicus.eu) · [ESA WorldCover](https://esa-worldcover.org) | Terrain, slope, drainage, land cover |
-| [OpenStreetMap](https://www.openstreetmap.org) | Power grid, roads, settlements |
-| [Protected Planet (WDPA)](https://www.protectedplanet.net) · [WorldPop](https://www.worldpop.org) | Protected areas, population |
-
-Full details, resolutions and access methods: [`docs/SPEC.md`](docs/SPEC.md) (section 6).
-
-## How this project maps to the DEPI curriculum
-
-Built by trainees of the **Digital Egypt Pioneers Initiative (DEPI)** — *AI & Data Science · Microsoft Data Engineer* track. Each course has a concrete counterpart in the project:
-
-| DEPI course | Where it shows up in the project |
-|---|---|
-| Intro to Data Engineering | Layered architecture (bronze / silver / gold), ELT design, [`docs/SPEC.md`](docs/SPEC.md) |
-| Programming Essentials | Clean, tested, linted code in `engine/` and CI |
-| SQL & Database Management | PostGIS schemas, spatial queries, dbt models |
-| Advanced Python for Data Engineering | Resilient extractors (retries, validation), Pandera contracts, pytest |
-| Data Pipelines | Airflow DAGs: scheduling, idempotency, backfill, data-quality gates |
-| Big Data Processing | Climate-scale data with Parquet / Zarr, Dask, Polars and DuckDB |
-| Microsoft Azure Data Engineer Associate | Azure migration path (table below) |
-| Deployment | Docker Compose, GitHub Actions CI/CD, free static hosting |
-| AI for Data Engineers | RAG assistant, ML bias-correction and uncertainty estimation |
-| Prompt Engineering | Grounded prompts, guardrails and evaluation for the assistant |
-
-**Azure equivalents** (the project runs on a free open-source stack; this is how each part maps to Azure):
-
-| This project | Azure service |
-|---|---|
-| Apache Airflow | Azure Data Factory / Microsoft Fabric pipelines |
-| Parquet / Zarr data lake | Azure Data Lake Storage Gen2 |
-| PostgreSQL + PostGIS | Azure Database for PostgreSQL |
-| dbt + DuckDB / Polars | Microsoft Fabric Warehouse / Synapse |
-| Dask for large rasters | Azure Databricks / Synapse Spark |
-| Kafka | Azure Event Hubs |
-| Prometheus + Grafana | Azure Monitor |
-| Metabase | Power BI |
-| MLflow | Azure Machine Learning |
-| `.env` secrets | Azure Key Vault |
+Never commit API keys, credentials or `.env` files. Use `.env.example` for variable names only.
 
 ## Roadmap
 
-- [x] Repository, collaboration rules and CI
-- [x] Reproducible environments (conda, npm) and one-command setup
-- [x] Containerised infrastructure with on-demand profiles
-- [x] Website skeleton with all eight screen routes
-- [ ] Ingestion DAGs (hourly forecast, dust, ERA5 backfill)
-- [ ] H3 grid of Egypt and static layers (terrain, land cover, grid, protected areas)
-- [ ] Energy engine (PV with dust, wind, hybrid complementarity, LCOE)
-- [ ] Site ranking, risk filters and public API
-- [ ] Web screens: map, site details, compare, forecast
-- [ ] 3D simulator
-- [ ] Free assistant (RAG + tools)
-- [ ] Validation against PVGIS / Global Atlases and public deployment
+Developed incrementally: a reliable data foundation first, then models, then the application.
 
-## Team: Data Titans
+- [ ] **Phase 1 — Data foundation**
+  - [x] Repository structure, source inventory and one-command setup
+  - [ ] Initial H3 grid for Egypt
+  - [ ] A small, documented subset of historical solar and weather data
+  - [ ] Initial data contracts and quality checks
+- [ ] **Phase 2 — Geospatial integration**: terrain, land-cover, protected-area and infrastructure layers; standardised spatial and temporal references; first resource-potential map
+- [ ] **Phase 3 — Energy estimation**: solar and wind models, dust-related losses, comparison with independent references, documented assumptions and uncertainty
+- [ ] **Phase 4 — Site ranking**: transparent scoring criteria, infrastructure and risk information, explanations of the main ranking factors
+- [ ] **Phase 5 — Application**: API, interactive map, site profiles, comparisons and report exports connected to validated pipeline results
+- [ ] **Phase 6 — Advanced capabilities**: short-term forecasting, combined solar–wind scenarios and storage, further risk layers, Arabic-language explanations
 
-| Member | Role |
-|---|---|
-| **Mostafa Mohamed Atef** ([@mostafaxz723](https://github.com/mostafaxz723)) | Team Lead & Data Engineer |
-| **Hoda Lotfy Elkassas** ([@hoda-elkassas](https://github.com/hoda-elkassas)) | Data Engineer |
-| **Waleed Ahmed Anwer** | Data Engineer |
-| **Malak Ahmed Naga** ([@malaknaga](https://github.com/malaknaga900-ai)) | Data Engineer |
-| **Asmaa Mohamed sadallah** | Data Engineer |
-| **Mahmoud Fayez Khedr** ([@mahmoud19000](https://github.com/mahmoud19000)) | Data Engineer |
+Items are marked complete only after implementation and verification, and the roadmap may change with data availability and feasibility.
 
-## Contributing
-
-We work with short-lived branches and pull requests. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) first. Golden rules: never commit `.env`, add every new library to `environment.yml` immediately, and open a pull request instead of pushing to `main`.
-
-## Data attribution and disclaimer
-
-This is a **planning-level decision-support tool**, not a bankable feasibility study. Results do not replace on-site measurement or official permitting. Map data © OpenStreetMap contributors (ODbL); Copernicus, ESA WorldCover, Global Solar/Wind Atlas, WorldPop and other sources are used under their own licences and must be credited where shown. Code licence: to be confirmed by the team.
+## Team Data Titans
 
 <div align="center">
 
-**Built in Egypt, for Egypt's energy transition.**
+<img src="docs/assets/data-titans-logo.png" alt="Data Titans logo" width="280">
+
+**A collaborative team project under the Digital Egypt Pioneers Initiative (DEPI)**
+AI & Data Science — Microsoft Data Engineer Track
+
+<table>
+  <tr>
+    <td align="center" width="200">
+      <a href="https://github.com/mostafaxz723">
+        <img src="https://github.com/mostafaxz723.png?size=120" width="96" alt="Mostafa Mohamed ElNorag"><br>
+        <b>Mostafa Mohamed ElNorag</b>
+      </a><br>
+      <sub>Team Lead & Data Engineer</sub>
+    </td>
+    <td align="center" width="200">
+      <a href="https://github.com/hoda-elkassas">
+        <img src="https://github.com/hoda-elkassas.png?size=120" width="96" alt="Hoda Lotfy Elkassas"><br>
+        <b>Hoda Lotfy Elkassas</b>
+      </a><br>
+      <sub>Data Engineer</sub>
+    </td>
+    <td align="center" width="200">
+      <a href="https://github.com/Asmaa-Elbialy">
+        <img src="https://github.com/Asmaa-Elbialy.png?size=120" width="96" alt="Asmaa Mohamed Sadallah"><br>
+        <b>Asmaa Mohamed Sadallah</b>
+      </a><br>
+      <sub>Data Engineer</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="200">
+      <a href="https://github.com/mahmoud19000">
+        <img src="https://github.com/mahmoud19000.png?size=120" width="96" alt="Mahmoud Fayez Khedr"><br>
+        <b>Mahmoud Fayez Khedr</b>
+      </a><br>
+      <sub>Data Engineer</sub>
+    </td>
+    <td align="center" width="200">
+      <a href="https://github.com/malaknaga900-ai">
+        <img src="https://github.com/malaknaga900-ai.png?size=120" width="96" alt="Malak Ahmed Naga"><br>
+        <b>Malak Ahmed Naga</b>
+      </a><br>
+      <sub>Data Engineer</sub>
+    </td>
+    <td align="center" width="200">
+      <img src="docs/assets/avatar-placeholder.svg" width="96" alt="Waleed Ahmed Seliem"><br>
+      <b>Waleed Ahmed Seliem</b><br>
+      <sub>Data Engineer · GitHub coming soon</sub>
+    </td>
+  </tr>
+</table>
+
+<sub>-----------------------------------------------------</sub>
+
+</div>
+
+## Expected impact
+
+The project aims to support more comprehensive, transparent and reproducible early-stage renewable energy screening in Egypt: better-informed comparison of candidate sites, more realistic generation estimates, earlier identification of terrain, environmental and infrastructure constraints, a better understanding of solar–wind complementarity, and a reusable data foundation for future analytics. These are intended benefits, not measured outcomes; impact claims will require evidence from the completed implementation and its evaluation.
+
+## Scope and limitations
+
+Egypt Live Renewable Energy Atlas is an **early-stage decision-support and research platform**. It is not a substitute for a professional feasibility study, field measurements, grid-connection assessment, official permitting or environmental impact assessment.
+
+- Public datasets may be incomplete, inconsistent or outdated.
+- Mapped infrastructure does not guarantee grid capacity or connection availability.
+- Generation estimates depend on input quality, model configuration and system assumptions.
+- Dust-loss estimates and cleaning recommendations require calibration.
+- Environmental constraints must be checked against authoritative data and applicable regulations.
+- Economic rankings depend on documented cost assumptions and are not investment guarantees.
+
+The platform aims to communicate data gaps, assumptions and uncertainty alongside its outputs.
+
+## Collaboration
+
+We work with short-lived branches, descriptive commits and pull requests. See [`CONTRIBUTING.md`](CONTRIBUTING.md). In short: never commit `.env`, add every new library to `environment.yml` immediately, document data sources and assumptions, and record known limitations instead of filling gaps with unsupported assumptions.
+
+## Acknowledgments
+
+We thank the data providers, research institutions and open-source communities whose datasets and tools support this project, including Copernicus, NASA, Open-Meteo, ESA, OpenStreetMap contributors (© OpenStreetMap contributors, ODbL), PVGIS, and the Global Solar and Wind Atlas projects. Attribution and licensing requirements are reviewed per dataset and dependency. Code licence: to be confirmed by the team.
+
+<div align="center">
+
+<br>
+
+**Data Titans** — *Turning renewable energy data into better decisions for Egypt.*
+
+Digital Egypt Pioneers Initiative · AI & Data Science — Microsoft Data Engineer Track
 
 </div>
