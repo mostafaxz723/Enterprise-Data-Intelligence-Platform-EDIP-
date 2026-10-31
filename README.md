@@ -267,7 +267,7 @@ powershell -ExecutionPolicy Bypass -File setup\bootstrap.ps1 -Role data    # dat
 powershell -ExecutionPolicy Bypass -File setup\bootstrap.ps1               # everything
 ```
 
-Linux / macOS: `bash setup/bootstrap.sh --role all`. A step-by-step guide with troubleshooting is in [`START-HERE.md`](START-HERE.md).
+Linux / macOS: `bash setup/bootstrap.sh --role all`. A detailed step-by-step onboarding guide (Windows, Ubuntu, other systems) is in [`docs/onboarding/`](docs/onboarding/README.md); the team workflow is in [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ```powershell
 docker compose up -d                      # PostGIS only (lightweight)
